@@ -1,5 +1,5 @@
 # Buildstage
-FROM ghcr.io/linuxserver/baseimage-alpine:3.16 as buildstage
+FROM ghcr.io/linuxserver/baseimage-alpine:3.17 as buildstage
 
 # set NZBGET version
 ARG NZBGET_RELEASE
@@ -16,15 +16,16 @@ RUN \
     ncurses-dev \
     openssl-dev && \
   echo "**** build nzbget ****" && \
-  if [ -z ${NZBGET_RELEASE+x} ]; then \
-    NZBGET_RELEASE=$(curl -sX GET "https://api.github.com/repos/nzbget/nzbget/releases/latest" \
-      | awk '/tag_name/{print $4;exit}' FS='[""]'); \
-  fi && \
+  #  NOT CURRENTLY WORKING - NZBGET-NG NO RELEASES
+  #if [ -z ${NZBGET_RELEASE+x} ]; then \
+  #  NZBGET_RELEASE=$(curl -sX GET "https://api.github.com/repos/nzbget/nzbget/releases/latest" \
+  #    | awk '/tag_name/{print $4;exit}' FS='[""]'); \
+  #fi && \
   mkdir -p /app/nzbget && \
-  git clone https://github.com/nzbget/nzbget.git nzbget && \
+  git clone https://github.com/nzbget-ng/nzbget.git nzbget && \
   cd nzbget/ && \
-  git checkout ${NZBGET_RELEASE} && \
-  git cherry-pick -n fa57474d && \
+  #git checkout ${NZBGET_RELEASE} && \
+  #git cherry-pick -n fa57474d && \
   ./configure \
     bindir='${exec_prefix}' && \
   make && \
@@ -53,14 +54,14 @@ RUN \
     "https://curl.haxx.se/ca/cacert.pem"
 
 # Runtime Stage
-FROM ghcr.io/linuxserver/baseimage-alpine:3.16
+FROM ghcr.io/linuxserver/baseimage-alpine:3.17
 
-ARG UNRAR_VERSION=6.1.7
+ARG UNRAR_VERSION=6.2.1
 # set version label
 ARG BUILD_DATE
 ARG VERSION
-LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
-LABEL maintainer="thelamer"
+LABEL build_version="Riddlecp version:- ${VERSION} Build-date:- ${BUILD_DATE}"
+LABEL maintainer="riddlecp"
 
 RUN \
   echo "**** install build packages ****" && \
@@ -106,7 +107,7 @@ RUN \
     pynzbget \
     rarfile \
     six && \
-  ln -s /usr/bin/python3 /usr/bin/python && \
+  #ln -s /usr/bin/python3 /usr/bin/python && \
   echo "**** cleanup ****" && \
   apk del --purge \
     build-dependencies && \
