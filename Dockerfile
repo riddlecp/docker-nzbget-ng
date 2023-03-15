@@ -13,6 +13,8 @@ RUN \
     libxml2-dev \
     libxslt-dev \
     make \
+    automake \
+    autoconf \
     ncurses-dev \
     openssl-dev && \
   echo "**** build nzbget ****" && \
