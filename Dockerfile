@@ -2,7 +2,7 @@
 FROM ghcr.io/linuxserver/baseimage-alpine:3.17 as buildstage
 
 # set NZBGET version
-ARG NZBGET_RELEASE
+#ARG NZBGET_RELEASE
 
 RUN \
   echo "**** install build packages ****" && \
