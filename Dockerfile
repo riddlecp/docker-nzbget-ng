@@ -24,6 +24,7 @@ RUN \
   mkdir -p /app/nzbget && \
   git clone https://github.com/nzbget-ng/nzbget.git nzbget && \
   cd nzbget/ && \
+  autoreconf --install && \
   #git checkout ${NZBGET_RELEASE} && \
   #git cherry-pick -n fa57474d && \
   ./configure \
