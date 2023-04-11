@@ -24,7 +24,7 @@ RUN \
 #      | awk '/tag_name/{print $4;exit}' FS='[""]'); \
 #  fi && \
   mkdir -p /app/nzbget && \
-  git clone --depth 1 https://github.com/nzbget-ng/nzbget.git --branch v21.3-rc1 --single-branch nzbget && \
+  git clone --depth 1 https://github.com/nzbget-ng/nzbget.git --branch v21.4-rc1 --single-branch nzbget && \
   cd nzbget/ && \
   autoreconf --install && \
 #  git checkout ${NZBGET_RELEASE} && \
