@@ -4,6 +4,8 @@ FROM ghcr.io/linuxserver/baseimage-alpine:3.17 as buildstage
 # set NZBGET version
 # ARG NZBGET_RELEASE
 
+ADD "https://api.github.com/repos/nzbget-ng/nzbget/commits?per_page=1" latest_commit
+
 RUN \
   echo "**** install build packages ****" && \
   apk add \
@@ -24,11 +26,11 @@ RUN \
 #      | awk '/tag_name/{print $4;exit}' FS='[""]'); \
 #  fi && \
   mkdir -p /app/nzbget && \
-  git clone --depth 1 https://github.com/nzbget-ng/nzbget.git --branch v21.3-rc1 --single-branch nzbget && \
+  git clone --depth 1 https://github.com/nzbget-ng/nzbget.git nzbget && \
   cd nzbget/ && \
   autoreconf --install && \
-#  git checkout ${NZBGET_RELEASE} && \
-#  git cherry-pick -n fa57474d && \
+  git checkout develop && \
+  git cherry-pick -n fa57474d && \
   ./configure \
     bindir='${exec_prefix}' && \
   make && \
@@ -102,7 +104,7 @@ RUN \
   pip3 install --no-cache-dir -U \
     pip \
     wheel && \
-  pip install --no-cache-dir --find-links https://wheel-index.linuxserver.io/alpine-3.16/ \
+  pip install --no-cache-dir --find-links https://wheel-index.linuxserver.io/alpine-3.17/ \
     apprise \
     chardet \
     lxml \
