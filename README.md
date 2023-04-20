@@ -180,12 +180,12 @@ Below are the instructions for updating containers:
 If you want to make local modifications to these images for development purposes or just to customize the logic:
 
 ```bash
-git clone https://github.com/linuxserver/docker-nzbget.git
-cd docker-nzbget
+git clone https://github.com/riddlecp/docker-nzbget-ng.git
+cd docker-nzbget-ng
 docker build \
   --no-cache \
   --pull \
-  -t lscr.io/linuxserver/nzbget:latest .
+  -t 	ghcr.io/riddlecp/docker-nzbget-ng:latest .
 ```
 
 The ARM variants can be built on x86_64 hardware using `multiarch/qemu-user-static`

@@ -2,15 +2,15 @@
 
 # project information
 project_name: nzbget-ng
-project_url: "http://nzbget.net/"
+project_url: "http://nzbget-ng.net/"
 project_logo: "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/nzbget-banner.png"
 project_blurb: "[{{ project_name|capitalize }}]({{ project_url }}) is a usenet downloader, written in C++ and designed with performance in mind to achieve maximum download speed by using very little system resources."
-project_lsio_github_repo_url: "https://github.com/linuxserver/docker-{{ project_name }}"
+project_lsio_github_repo_url: "https://github.com/riddlecp/docker-{{ project_name }}"
 project_blurb_optional_extras_enabled: false
 
 # deprecation information
 project_deprecation_status: true
-project_deprecation_message: "nzbget has been deprecated by its developers. Please consider switching to SABnzbd https://github.com/linuxserver/docker-sabnzbd"
+project_deprecation_message: "nzbget has been deprecated by its developers. Please consider switching to SABnzbd or NZBGet-ng"
 
 # supported architectures
 available_architectures:

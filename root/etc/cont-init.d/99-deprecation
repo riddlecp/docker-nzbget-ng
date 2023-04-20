@@ -5,15 +5,15 @@ echo '
 ******************************************************
 *                                                    *
 *                                                    *
-*             This image is deprecated.              *
-*      We will not offer support for this image      *
-*             and it will not be updated.            *
+*            This image is not supported.            *
+*                                                    *
 *                                                    *
 *                                                    *
 ******************************************************
 ******************************************************
 
-nzbget has been deprecated by its developers. Please consider switching to SABnzbd https://github.com/linuxserver/docker-sabnzbd
+nzbget has been deprecated by its developers. Please consider switching to SABnzbd https://github.com/linuxserver/docker-sabnzbd if you need support
+Attempts to update with nzbget-ng development will happen as time allows
 
 ******************************************************
 ******************************************************'
