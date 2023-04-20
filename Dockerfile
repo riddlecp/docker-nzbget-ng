@@ -1,9 +1,6 @@
 # Buildstage
 FROM ghcr.io/linuxserver/baseimage-alpine:3.17 as buildstage
 
-# set NZBGET version
-# ARG NZBGET_RELEASE
-
 ADD "https://api.github.com/repos/nzbget-ng/nzbget/commits?per_page=1" latest_commit
 
 RUN \
@@ -14,26 +11,20 @@ RUN \
     git \
     libxml2-dev \
     libxslt-dev \
-    make \
-	automake \
-	autoconf \
+    libcap-dev \
+    autoconf automake make \
     ncurses-dev \
     openssl-dev && \
   echo "**** build nzbget ****" && \
-# FIXME: once nzbget-ng sort releases
-#  if [ -z ${NZBGET_RELEASE+x} ]; then \
-#    NZBGET_RELEASE=$(curl -sX GET "https://api.github.com/repos/nzbget/nzbget/releases/latest" \
-#      | awk '/tag_name/{print $4;exit}' FS='[""]'); \
-#  fi && \
   mkdir -p /app/nzbget && \
-  git clone --depth 1 https://github.com/nzbget-ng/nzbget.git nzbget && \
+  git clone https://github.com/nzbget-ng/nzbget.git nzbget && \
   cd nzbget/ && \
-  autoreconf --install && \
   git checkout develop && \
   git cherry-pick -n fa57474d && \
+  make && \
   ./configure \
     bindir='${exec_prefix}' && \
-  make && \
+  make -j && \
   make prefix=/app/nzbget install && \
   sed -i \
     -e "s#^MainDir=.*#MainDir=/downloads#g" \
@@ -78,6 +69,7 @@ RUN \
     libffi-dev \
     libxml2-dev \
     libxslt-dev \
+    libcap-dev \
     make \
     openssl-dev \
     python3-dev && \
@@ -85,6 +77,7 @@ RUN \
   apk add --no-cache \
     libxml2 \
     libxslt \
+    libcap \
     openssl \
     p7zip \
     py3-pip \
@@ -104,7 +97,7 @@ RUN \
   pip3 install --no-cache-dir -U \
     pip \
     wheel && \
-  pip install --no-cache-dir --find-links https://wheel-index.linuxserver.io/alpine-3.17/ \
+  pip install --no-cache-dir --find-links https://wheel-index.linuxserver.io/alpine-3.16/ \
     apprise \
     chardet \
     lxml \
@@ -112,7 +105,6 @@ RUN \
     pynzbget \
     rarfile \
     six && \
-#  ln -s /usr/bin/python3 /usr/bin/python && \
   echo "**** cleanup ****" && \
   apk del --purge \
     build-dependencies && \
